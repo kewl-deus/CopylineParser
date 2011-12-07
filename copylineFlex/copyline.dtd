@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!ENTITY % String "CDATA">
+<!ENTITY % Integer "CDATA">
+<!ENTITY % FieldType "(alpha|numeric)">
+
+
+<!ELEMENT copyline (groupfield*, switchgroup*, simplefield*)>
+
+<!ELEMENT groupfield (comment?, groupfield*, switchgroup*, simplefield*)>
+
+<!ELEMENT simplefield (comment?)>
+
+<!ELEMENT switchgroup (comment?, switchfield+)>
+
+<!ELEMENT switchfield (comment?, (value | valuerange)+)>
+
+<!ELEMENT value (#PCDATA)>
+
+<!ELEMENT valuerange>
+
+<!ELEMENT comment (#PCDATA)>
+
+
+
+<!-- groupfield attributes -->
+<!ATTLIST groupfield     stepnumber      %Integer;     #REQUIRED>
+<!ATTLIST groupfield     name            %String;      #REQUIRED>
+
+
+<!-- simplefield attributes -->
+<!ATTLIST simplefield    stepnumber      %Integer;     #REQUIRED>
+<!ATTLIST simplefield    name            %String;      #REQUIRED>
+<!ATTLIST simplefield    type            %FieldType;   #REQUIRED>
+<!ATTLIST simplefield    length          %Integer;     #REQUIRED>
+
+
+<!-- switchgroup attributes -->
+<!ATTLIST switchgroup    stepnumber      %Integer;     #REQUIRED>
+<!ATTLIST switchgroup    name            %String;      #REQUIRED>
+<!ATTLIST switchgroup    type            %FieldType;   #REQUIRED>
+<!ATTLIST switchgroup    length          %Integer;     #REQUIRED>
+
+
+<!-- switchfield attributes -->
+<!ATTLIST switchfield    stepnumber      %Integer;     "88">
+<!ATTLIST switchfield    name            %String;      #REQUIRED>
+
+
+<!-- valuerange attributes -->
+<!ATTLIST valuerange     startvalue      %Integer;      #REQUIRED>
+<!ATTLIST valuerange     endvalue        %Integer;      #REQUIRED>

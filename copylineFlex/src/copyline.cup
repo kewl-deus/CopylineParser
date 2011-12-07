@@ -1,0 +1,135 @@
+import java_cup.runtime.*;
+
+
+
+parser code  {: 
+  public void report_error(String message, Object info) {
+    StringBuffer m = new StringBuffer("Error ");
+
+    if (info instanceof java_cup.runtime.Symbol) 
+      m.append( "("+info.toString()+")" );
+     
+    m.append(" : "+message);
+   
+    System.out.println(m);
+  }
+   
+  public void report_fatal_error(String message, Object info) {
+    report_error(message, info);
+    throw new RuntimeException("Fatal Syntax Error");
+  }
+:};
+
+terminal java.lang.Integer NUMBER;
+terminal java.lang.String IDENTIFIER;
+terminal java.lang.String TYPEDEFINITION;
+terminal java.lang.String STRING_LITERAL;
+terminal java.lang.Boolean BOOLEAN_LITERAL;
+terminal COMMA;
+terminal DOT;
+terminal OCCURS;
+terminal TIMES;
+terminal VALUE;
+terminal THROUGH;
+terminal REDEFINES;
+terminal PICTURE;
+terminal PACKED_DECIMAL;
+
+non terminal copyline;
+non terminal abstractfield;
+non terminal groupfield;
+non terminal simplefield;
+non terminal fieldtype;
+non terminal occurence_structure;
+non terminal redefinition_structure;
+non terminal redef_or_occ;
+non terminal mixed_fields;
+non terminal strings;
+non terminal numbers;
+non terminal value_structure;
+non terminal packedfield;
+non terminal number_ranges;
+
+start with copyline;
+
+
+copyline ::= mixed_fields;
+
+
+mixed_fields ::= groupfield mixed_fields | packedfield mixed_fields | packedfield | groupfield;
+
+
+// *** Fields ***
+
+abstractfield ::= NUMBER:stepnumber IDENTIFIER:fieldname
+		{:
+		  FieldBuilder fb = FieldBuilder.getInstance();
+		  fb.clearBuildParameters();
+		  fb.setFieldStepNumber(stepnumber);
+		  fb.setFieldName(fieldname);
+		:};
+
+
+groupfield ::= abstractfield redef_or_occ DOT
+		{:
+		  RESULT = FieldBuilder.getInstance().buildGroupField();
+		:};
+		
+packedfield ::= simplefield DOT | simplefield PACKED_DECIMAL DOT;
+
+simplefield ::= abstractfield fieldtype
+		{:
+		  RESULT = FieldBuilder.getInstance().buildSimpleField();
+		:}
+		| abstractfield fieldtype occurence_structure
+		{:
+		  RESULT = FieldBuilder.getInstance().buildSimpleField();
+		:}
+		| abstractfield redefinition_structure fieldtype
+		{:
+		  RESULT = FieldBuilder.getInstance().buildSimpleField();
+		:}
+		| abstractfield value_structure
+		{:
+		  RESULT = FieldBuilder.getInstance().buildSwitchField();
+		:};
+
+
+// *** Structures ****
+
+fieldtype ::= PICTURE TYPEDEFINITION:typeDefString
+		{:
+		  FieldBuilder.getInstance().setFieldTypedefinition(typeDefString);
+		  RESULT = typeDefString;
+		:}
+		| PICTURE NUMBER:singleNine
+		{:
+		  FieldBuilder.getInstance().setFieldTypedefinition("9");
+		  RESULT = "9";
+		:};
+
+occurence_structure ::= OCCURS NUMBER:occurence
+			{:
+			  FieldBuilder.getInstance().setFieldOccurence(occurence);
+			  RESULT = occurence;
+			:}
+			| OCCURS NUMBER:occurence TIMES
+			{:
+			  FieldBuilder.getInstance().setFieldOccurence(occurence);
+			  RESULT = occurence;
+			:};
+
+redefinition_structure ::= REDEFINES IDENTIFIER:nameOfRedefinedField;
+
+redef_or_occ ::= redefinition_structure | occurence_structure | ;
+
+value_structure ::= VALUE strings
+					| VALUE BOOLEAN_LITERAL
+					| VALUE numbers
+					| VALUE number_ranges;
+					
+strings ::= STRING_LITERAL strings | STRING_LITERAL;
+
+numbers ::= NUMBER COMMA numbers | NUMBER numbers | NUMBER;
+
+number_ranges ::= NUMBER THROUGH NUMBER | NUMBER THROUGH NUMBER number_ranges;

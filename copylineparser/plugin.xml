@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin
+   id="CopylineParserPlugin"
+   name="Copylineparser Plug-in"
+   version="1.2.9"
+   provider-name="Dennis Gottschalk"
+   class="copylineparser.CopylineparserPlugin">
+
+   <runtime>
+      <library name="copylineparser.jar">
+         <export name="*"/>
+      </library>
+   </runtime>
+
+   <requires>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="org.eclipse.ui.forms"/>
+      <import plugin="org.eclipse.ui.workbench.texteditor"/>
+      <import plugin="org.eclipse.jface.text"/>
+   </requires>
+
+   <extension
+         id="CopylineParserApplication"
+         name="CopystreckenParser"
+         point="org.eclipse.core.runtime.applications">
+      <application>
+         <run
+               class="copylineparser.CopylineparserApplication">
+         </run>
+      </application>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            icon="icons/brille.gif"
+            class="copylineparser.ParserPerspective"
+            name="Parser Perspektive"
+            id="copylineparser.ParserPerspective">
+      </perspective>
+      <perspective
+            icon="icons/taschenlampe.gif"
+            class="copylineparser.ScannerPerspective"
+            name="Scanner Perspektive"
+            id="copylineparser.ScannerPerspective"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.actionSets">
+         
+      <actionSet
+            label="ParsingAktionsset"
+            visible="true"
+            id="copylineparser.actionSet">
+         <menu
+               label="Parsen"
+               id="parsingMenu">
+            <separator
+                  name="parsingMenuGroup">
+            </separator>
+         </menu>
+         
+         <action
+               toolbarPath="parsingMenuGroup"
+               label="Generate TorqueXML"
+               class="copylineparser.actions.GenerateXmlSourceAction"
+               tooltip="Generiert ein Torque XML-Schema"
+               icon="icons/newxml_wiz.gif"
+               style="push"
+               menubarPath="parsingMenu/parsingMenuGroup"
+               id="copylineparser.actions.GenerateXmlSourceAction"/>
+         
+         <action
+               toolbarPath="parsingMenuGroup"
+               label="Generate SQL"
+               class="copylineparser.actions.GenerateSqlSourceAction"
+               tooltip="Generiert SQL Sourcecode"
+               icon="icons/claytable_new.gif"
+               style="push"
+               menubarPath="parsingMenu/parsingMenuGroup"
+               id="copylineparser.actions.GenerateSqlSourceAction"/>
+         
+         <action
+               toolbarPath="parsingMenuGroup"
+               label="Generate Java"
+               class="copylineparser.actions.GenerateJavaSourceAction"
+               tooltip="Generiert Java Sourcecode"
+               icon="icons/newsbook_wiz.gif"
+               style="push"
+               menubarPath="parsingMenu/parsingMenuGroup"
+               id="copylineparser.actions.GenerateJavaSourceAction"/>
+         
+         
+         <action
+               toolbarPath="parsingMenuGroup"
+               label="Generate Cobol"
+               tooltip="Generiert Cobol Sourcecode"
+               class="copylineparser.actions.GenerateCobolSourceAction"
+               icon="icons/newclass_wiz.gif"
+               style="push"
+               menubarPath="parsingMenu/parsingMenuGroup"
+               id="copylineparser.actions.GenerateCobolSourceAction"/>
+         
+               
+         <action
+               toolbarPath="parsingMenuGroup"
+               label="Parsen"
+               tooltip="Parst das Ergebnis des Scannerlaufs"
+               class="copylineparser.actions.ParseAction"
+               icon="icons/brille.gif"
+               style="push"
+               menubarPath="parsingMenu/parsingMenuGroup"
+               id="copylineparser.actions.ParseAction"/>      
+          
+               
+         <action
+               toolbarPath="parsingMenuGroup"
+               label="Scannen"
+               icon="icons/taschenlampe.gif"
+               tooltip="Scannt die Copystrecke im Editor"
+               class="copylineparser.actions.ScanAction"
+               style="push"
+               menubarPath="parsingMenu/parsingMenuGroup"
+               id="copylineparser.actions.ScanAction"/>
+                    
+          <action
+               toolbarPath="parsingMenuGroup"
+               label="Copystrecke öffnen"
+               tooltip="Öffnet eine Copystrecke"
+               class="copylineparser.actions.OpenSourceFileAction"
+               icon="icons/open.gif"
+               menubarPath="parsingMenu/parsingMenuGroup"
+               id="copylineparser.actions.OpenSourceFileAction"/>
+          
+      </actionSet>
+      
+      <actionSet
+            label="HilfeAktionsset"
+            visible="true"
+            id="copylineparser.HelpActionSet">
+         <menu
+               label="Hilfe"
+               id="hilfeMenu">
+            <separator name="hilfeMenuGroup"/>
+         </menu>
+         <action
+               label="Info"
+               class="copylineparser.actions.ShowInfoAction"
+               style="push"
+               menubarPath="hilfeMenu/hilfeMenuGroup"
+               id="copylineparser.actions.Info"/>
+      </actionSet>
+      
+   </extension>
+  
+  
+
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="Copylineparser Category"
+            id="copylineparserCategory"/>
+      <view
+            class="copylineparser.views.StructureView"
+            icon="icons/hierarchy_co.gif"
+            category="copylineparserCategory"
+            name="Strukturansicht"
+            id="copylineparser.views.StructureView"/>
+      <view
+            icon="icons/notepad.gif"
+            class="copylineparser.views.FieldView"
+            category="copylineparserCategory"
+            name="Feldeigenschaften"
+            id="copylineparser.views.FieldView"/>
+      <view
+            icon="icons/table.gif"
+            class="copylineparser.views.TokenStreamView"
+            category="copylineparserCategory"
+            name="TokenStream"
+            id="copylineparser.views.TokenStreamView"/>
+      <view
+            icon="icons/buch_offen.gif"
+            class="copylineparser.views.CopylineContentView"
+            category="copylineparserCategory"
+            name="Copystrecken Inhalt"
+            id="copylineparser.views.CopylineContentView"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            icon="icons/text_edit.gif"
+            class="copylineparser.editors.cobol.CopylineEditor"
+            default="true"
+            name="Copystrecken Editor"
+            contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
+            id="copylineparser.editors.cobol.CopylineEditor"
+            extensions="inl"/>
+      <editor
+            icon="icons/java.gif"
+            class="copylineparser.editors.java.JavaEditor"
+            default="false"
+            name="Java Editor"
+            contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
+            id="copylineparser.editors.java.JavaEditor"
+            extensions="java"/>
+      <editor
+            class="copylineparser.editors.java.MultiClassEditor"
+            icon="icons/eclipse.gif"
+            name="Klasseneditor"
+            id="copylineparser.editors.java.MultiClassEditor"/>
+      <editor
+            icon="icons/eclipse.gif"
+            class="copylineparser.editors.sql.SqlEditor"
+            default="false"
+            name="SQL Editor"
+            contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
+            id="copylineparser.editors.sql.SqlEditor"
+            extensions="sql"/>
+            
+       <editor
+            icon="icons/xml_perspective.gif"
+            class="copylineparser.editors.xml.XMLEditor"
+            default="false"
+            name="XML Editor"
+            contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
+            id="copylineparser.editors.xml.XMLEditor"
+            extensions="xml"/>
+   </extension>
+   
+
+</plugin>

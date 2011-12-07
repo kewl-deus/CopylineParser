@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: CopystreckenEditor
+Bundle-SymbolicName: de.dengot.copylineeditor; singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Activator: de.dengot.copylineeditor.CopylineEditorPlugin
+Bundle-Vendor: Dennis Gottschalk
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.jface.text,
+ org.eclipse.ui.editors,
+ org.eclipse.ui.views,
+ org.eclipse.ui.workbench.texteditor
+Eclipse-AutoStart: true

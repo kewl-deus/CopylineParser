@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="de.dengot.copylineeditor.ui.editor.CopylineEditor"
+            default="false"
+            extensions="inl"
+            icon="icons/brille.gif"
+            id="de.dengot.copylineeditor.ui.editor.CopylineEditor"
+            name="CopylineEditor"/>
+      <editor
+            class="guifw.genedit.GenericEditor"
+            default="false"
+            icon="icons/notepad.gif"
+            id="de.dengot.copylineeditor.ui.editor.FieldEditor"
+            name="Feldeditor"/>
+   </extension>
+
+</plugin>
