@@ -1,12 +1,12 @@
 package de.dengot.coboleditor.ui.editor;
 
-import org.eclipse.jface.text.IDocument;
-import org.eclipse.ui.IEditorInput;
+//import org.eclipse.jface.text.IDocument;
+//import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.texteditor.AbstractDecoratedTextEditor;
-import org.eclipse.ui.texteditor.IDocumentProvider;
+//import org.eclipse.ui.texteditor.IDocumentProvider;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 
-import de.dengot.coboleditor.logic.CobolParser;
+//import de.dengot.coboleditor.logic.CobolParser;
 import de.dengot.coboleditor.model.CobolProgram;
 import de.dengot.coboleditor.ui.outline.CobolContentOutlinePage;
 
@@ -23,7 +23,7 @@ public class CobolEditor extends AbstractDecoratedTextEditor
 
 	}
 
-	public Object getAdapter(Class required)
+	public Object getAdapter(@SuppressWarnings("rawtypes") Class required)
 	{
 		if (IContentOutlinePage.class.equals(required))
 		{
@@ -58,6 +58,7 @@ public class CobolEditor extends AbstractDecoratedTextEditor
 //			CobolProgram program = parser.parse(input.getName(), doc);
 //			setModel(program);
 //		}
+		System.out.println("getModel...");
 		return this.model;
 	}
 
