@@ -20,6 +20,7 @@ public class CobolReconcilingStrategy implements IReconcilingStrategy,
 
 	private IDocument fDocument;
 
+	@SuppressWarnings("unused")
 	private IProgressMonitor fProgressMonitor;
 
 	private CobolParser fParser;

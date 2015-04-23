@@ -11,5 +11,36 @@
             id="de.dengot.coboleditor.ui.editor.CobolEditor"
             name="CobolEditor"/>
    </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="de.sastry.coboleditor.ui.perspective.COBOLPerspective"
+            icon="icons/public_co.gif"
+            id="de.sastry.coboleditor.ui.perspective.COBperspective"
+            name="COBOL">
+      </perspective>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            class="de.sastry.coboleditor.wizard.COBProjWizardPage"
+            icon="icons/sample.gif"
+            id="de.sastry.cobol.wizard.COBProjWiz"
+            name="COBOL Project"
+            project="true">
+      </wizard>
+      <category
+            id="de.sastry.coboleditor.projwizard"
+            name="COBOL Wizards">
+      </category>
+      <wizard
+            canFinishEarly="false"
+            class="de.sastry.coboleditor.wizard.COBFileWizardPage"
+            icon="icons/notepad.gif"
+            id="de.sastry.cobol.wizard.COBFilWiz"
+            name="COBOL Source file"
+            project="false">
+      </wizard>
+   </extension>
 
 </plugin>

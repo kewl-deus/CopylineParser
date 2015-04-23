@@ -30,7 +30,25 @@ public class CobolSourceViewerConfiguration extends SourceViewerConfiguration
 {
 
 	private CobolEditor fEditor;
-
+	
+	public final static String[] KEYWORDS = { "OCCURS", "TIMES", "PACKED-DECIMAL",
+			"VALUE", "VALUES", "THRU", "THROUGH", "REDEFINES", "PIC",
+			"PICTURE", "BINARY", "FILLER", "MOVE", "IF", "THEN", "ELSE",
+			"END-IF", "PERFORM", "VARYING", "END-PERFORM", "FROM", "BY",
+			"UNTIL", "SECTION", "DIVISION", "CALL", "END-CALL",
+			"FILE-CONTROL", "EXIT", "STRING", "END-STRING", "WRITE", "END",
+			"INVALID", "KEY", "END-WRITE", "READ", "END-READ", "START",
+			"WITH", "ENVIRONMENT", "DATA", "CONFIGURATION", "PROGRAM-ID",
+			"SELECT", "RECORD", "IS", "IN", "OF", "AT", "TO", "FD",
+			"HIGH-VALUE", "LOW-VALUE", "USING", "INSPECT", "CONVERTING",
+			"FILE", "INPUT-OUTPUT", "WORKING-STORAGE", "DECIMAL-POINT",
+			"COMMA", "TERMINAL", "COPY", "SYMBOLIC", "CHARACTERS",
+			"SPECIAL-NAMES", "CONTINUE", "DISPLAY", "UPON", "SET", "AND",
+			"OR", "NOT", "COMPUTE", "ADD", "SUBSTRACT", "GIVING",
+			"FUNCTION", "REM", "MULTIPLY", "DIVIDE", "WHEN", "EVALUATE",
+			"END-EVALUATE", "OTHER", "INITIALIZE", "DELIMITED", "SIZE","STOP-RUN",
+			"INTO", "PROCEDURE" };
+	
 	private ITokenScanner fScanner;
 
 	public CobolSourceViewerConfiguration(CobolEditor editor)
@@ -41,8 +59,7 @@ public class CobolSourceViewerConfiguration extends SourceViewerConfiguration
 
 	public IReconciler getReconciler(ISourceViewer sourceViewer)
 	{
-		CobolReconcilingStrategy strategy = new CobolReconcilingStrategy(
-				fEditor);
+		CobolReconcilingStrategy strategy = new CobolReconcilingStrategy(fEditor);
 		MonoReconciler reconciler = new MonoReconciler(strategy, false);
 		reconciler.setProgressMonitor(new NullProgressMonitor());
 		//reconciler.setDelay(10000);
@@ -67,39 +84,16 @@ public class CobolSourceViewerConfiguration extends SourceViewerConfiguration
 	{
 		RuleBasedScanner scanner = new RuleBasedScanner();
 
-		final String[] KEYWORDS = { "OCCURS", "TIMES", "PACKED-DECIMAL",
-				"VALUE", "VALUES", "THRU", "THROUGH", "REDEFINES", "PIC",
-				"PICTURE", "BINARY", "FILLER", "MOVE", "IF", "THEN", "ELSE",
-				"END-IF", "PERFORM", "VARYING", "END-PERFORM", "FROM", "BY",
-				"UNTIL", "SECTION", "DIVISION", "CALL", "END-CALL",
-				"FILE-CONTROL", "EXIT", "STRING", "END-STRING", "WRITE", "END",
-				"INVALID", "KEY", "END-WRITE", "READ", "END-READ", "START",
-				"WITH", "ENVIRONMENT", "DATA", "CONFIGURATION", "PROGRAM-ID",
-				"SELECT", "RECORD", "IS", "IN", "OF", "AT", "TO", "FD",
-				"HIGH-VALUE", "LOW-VALUE", "USING", "INSPECT", "CONVERTING",
-				"FILE", "INPUT-OUTPUT", "WORKING-STORAGE", "DECIMAL-POINT",
-				"COMMA", "TERMINAL", "COPY", "SYMBOLIC", "CHARACTERS",
-				"SPECIAL-NAMES", "CONTINUE", "DISPLAY", "UPON", "SET", "AND",
-				"OR", "NOT", "COMPUTE", "ADD", "SUBSTRACT", "GIVING",
-				"FUNCTION", "REM", "MULTIPLY", "DIVIDE", "WHEN", "EVALUATE",
-				"END-EVALUATE", "OTHER", "INITIALIZE", "DELIMITED", "SIZE",
-				"INTO", "PROCEDURE" };
-
 		final String[] CONSTANTS = { "TRUE", "FALSE", "ZERO", "ZEROES",
 				"SPACE", "SPACES" };
 
 		SyntaxColorProvider colorProvider = new SyntaxColorProvider();
 
-		IToken keyword = new Token(new TextAttribute(colorProvider
-				.getColor(colorProvider.KEYWORD), null, SWT.BOLD));
-		IToken constant = new Token(new TextAttribute(colorProvider
-				.getColor(colorProvider.CONSTANT), null, SWT.BOLD));
-		IToken string = new Token(new TextAttribute(colorProvider
-				.getColor(colorProvider.STRING)));
-		IToken comment = new Token(new TextAttribute(colorProvider
-				.getColor(colorProvider.SINGLE_LINE_COMMENT)));
-		IToken other = new Token(new TextAttribute(colorProvider
-				.getColor(colorProvider.DEFAULT)));
+		IToken keyword = new Token(new TextAttribute(colorProvider.getColor(colorProvider.KEYWORD), null, SWT.BOLD));
+		IToken constant = new Token(new TextAttribute(colorProvider.getColor(colorProvider.CONSTANT), null, SWT.BOLD));
+		IToken string = new Token(new TextAttribute(colorProvider.getColor(colorProvider.STRING)));
+		IToken comment = new Token(new TextAttribute(colorProvider.getColor(colorProvider.SINGLE_LINE_COMMENT)));
+		IToken other = new Token(new TextAttribute(colorProvider.getColor(colorProvider.DEFAULT)));
 
 		List<IRule> rules = new ArrayList<IRule>();
 		// Add rule for single line comments.
